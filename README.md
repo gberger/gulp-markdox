@@ -55,7 +55,7 @@ Type: `String`
 Path or the custom template
 
 #### options.encoding
-Type: `String`  
+Type: `String`
 Default: `utf-8`
 
 Encoding of templates and files to parse
