@@ -38,7 +38,7 @@ var concat = require("gulp-concat");
 gulp.task("doc", function(){
   gulp.src("./src/*.js")
     .pipe(markdox())
-    .pipe(concat("doc.md")
+    .pipe(concat("doc.md"))
     .pipe(gulp.dest("./doc"));
 });
 ```
