@@ -1,5 +1,5 @@
 # gulp-markdox
-[![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url]
+[![NPM version][npm-image]][npm-url] [![Build Status](https://travis-ci.org/gberger/gulp-markdox.png)](https://travis-ci.org/gberger/gulp-markdox)
 
 > [markdox](https://github.com/cbou/markdox) plugin for [gulp](https://github.com/wearefractal/gulp)
 
