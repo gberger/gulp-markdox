@@ -45,13 +45,30 @@ gulp.task("doc", function(){
 
 ## API
 
+Please refer to [markdox's documentation](https://github.com/cbou/markdox) for further documentation of these options.x'
+
 ### markdox(options)
 
-#### options.msg
+#### options.template
 Type: `String`  
-Default: `Hello World`
 
-The message you wish to attach to file.
+Path or the custom template
+
+#### options.encoding
+Type: `String`  
+Default: `utf-8`
+
+Encoding of templates and files to parse
+
+#### options.formatter
+Type: `Function`
+
+Custom formatter
+
+#### options.compiler
+Type: `Function`
+
+Custom compiler
 
 
 ## License
