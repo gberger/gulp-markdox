@@ -1,0 +1,38 @@
+{
+  "name": "gulp-markdox",
+  "version": "0.1.0",
+  "description": "Generate Markdown documentation with markdox",
+  "keywords": [
+    "gulpplugin",
+    "markdox",
+    "markdown",
+    "documentation",
+    "gulp"
+  ],
+  "author": {
+    "name": "Guilherme Berger",
+    "email": "guilherme.berger@gmail.com",
+    "url": "https://github.com/gberger"
+  },
+  "repository": "gberger/gulp-markdox",
+  "scripts": {
+    "test": "mocha"
+  },
+  "main": "./index.js",
+  "dependencies": {
+    "through2": "*",
+    "gulp-util": "~2.2.0",
+    "markdox": "~0.1.2"
+  },
+  "devDependencies": {
+    "mocha": "*",
+    "should": "~2.1.0",
+    "coffee-script": "~1.7.1",
+    "event-stream": "~3.1.0"
+  },
+  "engines": {
+    "node": ">=0.8.0",
+    "npm": ">=1.2.10"
+  },
+  "license": "MIT"
+}
