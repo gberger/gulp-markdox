@@ -9,7 +9,7 @@ gulpError = function(message) {
 module.exports = function (options) {
 	"use strict";
 
-  if (!options || typeof op !== 'object') {
+  if (!options || typeof options !== 'object') {
     options = {};
   }
 
