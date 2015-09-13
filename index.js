@@ -33,7 +33,7 @@ module.exports = function (options) {
 		if (file.isBuffer()) {
 			markdox.process(file.path, options, function(err, result) {
 				if (err) {
-					this.emit("error", gulpError(err));
+					self.emit("error", gulpError(err));
 					return callback();
 				}
 				file.contents = new Buffer(result);
