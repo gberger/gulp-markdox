@@ -6,6 +6,7 @@ gulp = require 'gulp'
 gutil = require 'gulp-util'
 tmp = require 'tmp'
 assert = require 'stream-assert'
+itis = require 'funsert'
 
 delete require.cache[ require.resolve '../' ]
 
@@ -24,27 +25,23 @@ describe "gulp-markdox", ->
 		src.push file = tmp.fileSync prefix: 'markdox'
 		fs.writeFileSync file.name, '/** comment1 */'
 		customTemplate = tmp.fileSync prefix: 'markdox'
-		fs.writeFileSync customTemplate.name, 'custom template'
+		fs.writeFileSync customTemplate.name, 'custom template: <?= docfiles.length ?>'
 	after ->
 		fs.unlinkSync customTemplate.name
 		while src.length
 			src.shift().removeCallback()
 
-	it 'should generate output files with contents from all passed source src', (done) ->
+	it 'should generate output files with contents from all piped source files', (done) ->
 		testedStream = markdox()
-
-		generatedFiles = []
-		testedStream.on "data", (newFile) ->
-			generatedFiles.push(newFile)
 
 		gulp.src(src.map (file) -> file.name)
 			.pipe testedStream
-			.pipe assert.end ->
-				should.exist generatedFiles[0]
-				String(generatedFiles[0].contents).should.match /.*comment0.*/
-				should.exist generatedFiles[1]
-				String(generatedFiles[1].contents).should.match /.*comment1.*/
-				done()
+			.pipe assert.length 2
+			.pipe assert.first itis.ok (result) ->
+				String(result.contents).should.match /.*comment0.*/
+			.pipe assert.second itis.ok (result) ->
+				String(result.contents).should.match /.*comment1.*/
+			.pipe assert.end done
 
 	it 'should call custom compiler that was passed in constructor options', (done) ->
 		compiledCode = []
@@ -84,16 +81,23 @@ describe "gulp-markdox", ->
 	it 'should use custom template that was passed in constructor options', (done) ->
 		testedStream = markdox template: customTemplate.name
 
-		generatedFiles = []
-		testedStream.on "data", (newFile) ->
-			generatedFiles.push(newFile)
-
 		gulp.src(src.map (file) -> file.name)
 			.pipe testedStream
-			.pipe assert.end ->
-				should.exist generatedFiles[0]
-				String(generatedFiles[0].contents).should.be.exactly 'custom template'
-				should.exist generatedFiles[1]
-				String(generatedFiles[1].contents).should.be.exactly 'custom template'
-				done()
+			.pipe assert.length 2
+			.pipe assert.all itis.ok (result) ->
+				String(result.contents).should.be.exactly 'custom template: 1'
+			.pipe assert.end done
+
+	describe 'given concat option passed to constructor options', ->
+		it 'should generate one file with contents from all piped source files', (done) ->
+			testedStream = markdox concat: 'all.md', template: customTemplate.name
+
+			gulp.src(src.map (file) -> file.name)
+				.pipe testedStream
+				.pipe assert.length 1
+				.pipe assert.first itis.ok (result) ->
+					String(result.contents).should.be.exactly 'custom template: 2'
+				.pipe assert.first itis.ok (result) ->
+					result.path.should.match /.*\/all.md/
+				.pipe assert.end done
 

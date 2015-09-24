@@ -29,7 +29,8 @@ gulp.task("doc", function(){
 
 It can take on `.coffee` and `.iced` files, too.
 
-If you want to concatenate all your generated documentation files, use [gulp-concat](https://github.com/wearefractal/gulp-concat):
+If you want to concatenate all your generated documentation files, use `concat` option.
+All parsed docfiles will be passed to templateat once:
 
 ```javascript
 var markdox = require("gulp-markdox");
@@ -37,8 +38,7 @@ var concat = require("gulp-concat");
 
 gulp.task("doc", function(){
   gulp.src("./src/*.js")
-    .pipe(markdox())
-    .pipe(concat("doc.md"))
+    .pipe(markdox({ concat: "doc.md" })
     .pipe(gulp.dest("./doc"));
 });
 ```
@@ -50,7 +50,7 @@ Please refer to [markdox's documentation](https://github.com/cbou/markdox) for f
 ### markdox(options)
 
 #### options.template
-Type: `String`  
+Type: `String`
 
 Path or the custom template
 
@@ -70,6 +70,10 @@ Type: `Function`
 
 Custom compiler
 
+#### options.concat
+Type: `String`
+
+File name for concatenated docfile
 
 ## License
 
