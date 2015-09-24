@@ -58,3 +58,22 @@ describe "gulp-markdox", ->
 				compiledCode[1].should.be.eql [ files[1].name, '/** comment1 */' ]
 				done()
 
+	it 'should call custom formatter passed in options', (done) ->
+		formattedCode = []
+
+		testedStream = markdox formatter: (docfile) ->
+			formattedCode.push [
+				docfile.filename.replace(/^(\.\.\/)+/, '/'),
+				docfile.javadoc[0].description.full
+			]
+			defaultFormatter docfile
+
+		gulp.src(files.map (file) -> file.name)
+			.pipe testedStream
+			.pipe assert.end ->
+				should.exist formattedCode[0]
+				formattedCode[0].should.be.eql [ files[0].name, 'comment0' ]
+				should.exist formattedCode[1]
+				formattedCode[1].should.be.eql [ files[1].name, 'comment1' ]
+				done()
+
