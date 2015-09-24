@@ -1,7 +1,11 @@
-es     = require 'event-stream'
-fs     = require 'fs'
+es = require 'event-stream'
+fs = require 'fs'
 should = require 'should'
-mocha  = require 'mocha'
+mocha = require 'mocha'
+gulp = require 'gulp'
+gutil = require 'gulp-util'
+tmp = require 'tmp'
+assert = require 'stream-assert'
 
 delete require.cache[require.resolve("../")]
 
@@ -10,78 +14,26 @@ markdox = require("../")
 
 describe "gulp-markdox", ->
 
-	# name of our fixtures
-	files =
-		js: 'dox-parser.js'
-		coffee: 'dox-parser.coffee'
-		iced: 'iced.iced'
-		tags: 'tags.coffee'
+	files = []
 
-	# opens buffers for the source and expected files
-	makeFiles = (name) ->
-		srcFile = new gutil.File
-			path: "test/fixtures/#{name}"
-			contents: fs.readFileSync("test/fixtures/#{name}")
+	files.push path = tmp.tmpNameSync(prefix: 'markdox')
+	fs.writeFileSync path, '/** comment0 */'
+	files.push path = tmp.tmpNameSync(prefix: 'markdox')
+	fs.writeFileSync path, '/** comment1 */'
 
-		expectedFile = new gutil.File
-			path: "test/expected/#{name}"
-			contents: fs.readFileSync("test/expected/#{name}.md")
+	it "should generate files with contents of all passed files", (done) ->
+		testedStream = markdox()
 
-		return [srcFile, expectedFile]
+		generatedFiles = []
+		testedStream.on "data", (newFile) ->
+			generatedFiles.push(newFile)
 
+		gulp.src(files)
+			.pipe testedStream
+			.pipe assert.end ->
+				should.exist generatedFiles[0]
+				String(generatedFiles[0].contents).should.match /.*comment0.*/
+				should.exist generatedFiles[1]
+				String(generatedFiles[1].contents).should.match /.*comment1.*/
+				done()
 
-	it "should produce expected file with JS source", (done) ->
-		[srcFile, expectedFile] = makeFiles(files.js)
-
-		stream = markdox()
-
-		stream.on "data", (newFile) ->
-			should.exist newFile
-			should.exist newFile.contents
-			String(newFile.contents).should.equal String(expectedFile.contents)
-			done()
-
-		stream.write srcFile
-		stream.end()
-
-	it "should produce expected file with Coffee source", (done) ->
-		[srcFile, expectedFile] = makeFiles(files.coffee)
-
-		stream = markdox()
-
-		stream.on "data", (newFile) ->
-			should.exist newFile
-			should.exist newFile.contents
-			String(newFile.contents).should.equal String(expectedFile.contents)
-			done()
-
-		stream.write srcFile
-		stream.end()
-
-	it "should produce expected file with Iced source", (done) ->
-		[srcFile, expectedFile] = makeFiles(files.iced)
-
-		stream = markdox()
-
-		stream.on "data", (newFile) ->
-			should.exist newFile
-			should.exist newFile.contents
-			String(newFile.contents).should.equal String(expectedFile.contents)
-			done()
-
-		stream.write srcFile
-		stream.end()
-
-	it "should produce expected file with all tags", (done) ->
-		[srcFile, expectedFile] = makeFiles(files.tags)
-
-		stream = markdox()
-
-		stream.on "data", (newFile) ->
-			should.exist newFile
-			should.exist newFile.contents
-			String(newFile.contents).should.equal String(expectedFile.contents)
-			done()
-
-		stream.write srcFile
-		stream.end()
