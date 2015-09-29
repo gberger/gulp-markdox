@@ -83,5 +83,5 @@ File name for concatenated docfile
 [npm-image]: https://badge.fury.io/js/gulp-markdox2.png
 
 [travis-url]: http://travis-ci.org/webfront-toolkit/gulp-markdox2
-[travis-image]: https://secure.travis-ci.org/webfront-toolkit/gulp-markdox2.png?branch=mastera
+[travis-image]: https://secure.travis-ci.org/webfront-toolkit/gulp-markdox2.png?branch=master
 
