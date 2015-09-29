@@ -98,6 +98,6 @@ describe "gulp-markdox", ->
 				.pipe assert.first itis.ok (result) ->
 					String(result.contents).should.be.exactly 'custom template: 2'
 				.pipe assert.first itis.ok (result) ->
-					result.path.should.match /.*\/all.md/
+					result.path.should.match /all\.md/
 				.pipe assert.end done
 

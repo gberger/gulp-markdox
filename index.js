@@ -14,7 +14,6 @@ module.exports = function (options) {
 	}
 
 	var paths = [];
-	var base = '';
 
 	function gulpMarkdox(file, enc, callback) {
 		var self = this;
@@ -34,7 +33,6 @@ module.exports = function (options) {
 
 		if (typeof options.concat === 'string') {
 			paths.push(file.path);
-			base = file.base;
 			return callback();
 		}
 
@@ -62,7 +60,7 @@ module.exports = function (options) {
 				this.emit("error", gulpError(err));
 				return callback();
 			}
-			var file = new gutil.File({ path: base +'/'+ options.concat, });
+			var file = new gutil.File({ path: options.concat, });
 			file.contents = new Buffer(result);
 			self.push(file);
 			return callback();
