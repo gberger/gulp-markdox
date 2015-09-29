@@ -7,14 +7,15 @@
     "markdox",
     "markdown",
     "documentation",
-    "gulp"
+    "gulp",
+    "ejs"
   ],
   "author": {
-    "name": "Guilherme Berger",
-    "email": "guilherme.berger@gmail.com",
-    "url": "https://github.com/gberger"
+    "name": "Maciej Chałapuk",
+    "email": "maciej@chalapuk.pl",
+    "url": "https://github.com/muroc"
   },
-  "repository": "gberger/gulp-markdox",
+  "repository": "webfront-toolkit/gulp-markdox2",
   "scripts": {
     "test": "mocha"
   },
@@ -40,3 +41,4 @@
   },
   "license": "MIT"
 }
+
