@@ -1,4 +1,4 @@
-# gulp-markdox
+# gulp-markdox2
 [![NPM version][npm-image]][npm-url]
 [![Build Status][travis-image]][travis-url]
 
