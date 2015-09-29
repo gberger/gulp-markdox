@@ -1,9 +1,9 @@
 # gulp-markdox
-[![NPM version][npm-image]][npm-url] [![Build Status](https://travis-ci.org/gberger/gulp-markdox.png)](https://travis-ci.org/gberger/gulp-markdox)
+[![NPM version][npm-image]][npm-url]
+[![Build Status][travis-image]][travis-url]
 
-> [markdox](https://github.com/cbou/markdox) plugin for [gulp](https://github.com/wearefractal/gulp)
-
-Markdox is a documentation generator based on Dox and Markdown with support for JavaScript, CoffeeScript and IcedCoffeeScript.
+Markdox is a documentation generator based on Dox and Markdown with support for JavaScript,
+CoffeeScript and IcedCoffeeScript.
 
 This plugin is a `gulp` wrapper for it.
 
@@ -79,8 +79,9 @@ File name for concatenated docfile
 
 [MIT License](http://en.wikipedia.org/wiki/MIT_License)
 
-[npm-url]: https://npmjs.org/package/gulp-markdox
-[npm-image]: https://badge.fury.io/js/gulp-markdox.png
+[npm-url]: https://npmjs.org/package/gulp-markdox2
+[npm-image]: https://badge.fury.io/js/gulp-markdox2.png
 
-[travis-url]: http://travis-ci.org/gberger/gulp-markdox
-[travis-image]: https://secure.travis-ci.org/gberger/gulp-markdox.png?branch=master
+[travis-url]: http://travis-ci.org/webfront-toolkit/gulp-markdox2
+[travis-image]: https://secure.travis-ci.org/webfront-toolkit/gulp-markdox2.png?branch=mastera
+
