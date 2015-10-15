@@ -21,9 +21,11 @@
   },
   "main": "./index.js",
   "dependencies": {
-    "through2": "*",
+    "async": "^1.4.2",
     "gulp-util": "~2.2.0",
-    "markdox": "~0.1.2"
+    "markdox": "~0.1.2",
+    "through2": "*",
+    "underscore": "^1.8.3"
   },
   "devDependencies": {
     "mocha": "*",
@@ -41,4 +43,3 @@
   },
   "license": "MIT"
 }
-

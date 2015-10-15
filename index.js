@@ -1,71 +1,178 @@
-var gutil   = require("gulp-util");
-var through = require("through2");
-var markdox = require("markdox");
+// license: MIT
+'use strict';
 
-gulpError = function(message) {
-	return new gutil.PluginError('gulp-markdox', message)
+var gutil = require('gulp-util');
+var through = require('through2');
+var markdox = require('markdox');
+var path = require('path');
+var async = require('async');
+var _ = require('underscore');
+
+module.exports = function(options) {
+  var stream = gutil.noop();
+
+  var output = [];
+  var afterRender = stream
+    .pipe(module.exports.parse(options))
+    .pipe(module.exports.format())
+    .pipe(module.exports.render())
+    .pipe(through.obj(function(chunk, enc, callback) {
+      output.push(chunk);
+      return callback();
+    }));
+
+  function write(chunk, enc, callback) {
+    return stream.write(chunk, enc, callback);
+  }
+
+  function flush(callback) {
+    var self = this;
+    afterRender.on('finish', function(err) {
+      output.forEach(self.push.bind(self));
+      callback(err)
+    });
+    stream.end();
+  }
+
+  var retVal = through.obj(write, flush);
+  return retVal;
+};
+
+_.extend(module.exports, {
+  parse: stream(requireBuffer(parse), noop),
+  format: stream(requireProperty('javadoc', format), noop),
+  render: stream(requireProperty('formattedDoc', maybeConcat), render, createArray('chunks')),
+});
+
+function parse(self, options, chunk, callback) {
+  markdox.parse(chunk.path, options, function(err, doc) {
+    if (err) {
+      self.emit('error', gulpError(err));
+      return callback();
+    }
+
+    chunk.javadoc = doc;
+    self.push(chunk);
+    return callback();
+  });
 }
 
-module.exports = function (options) {
-	"use strict";
+function format(self, options, chunk, callback) {
+  try {
+    chunk.formattedDoc = options.formatter({
+      filename: chunk.path,
+      javadoc: chunk.javadoc,
+    });
+    self.push(chunk);
+    return callback();
 
-	if (!options || typeof options !== 'object') {
-		options = {};
-	}
+  } catch(e) {
+    self.emit('error', gulpError(e));
+    return callback(e);
+  }
+}
 
-	var paths = [];
+function maybeConcat(self, options, chunk, callback) {
+  var path = chunk.path;
+  if (typeof options.concat === 'string') {
+    path = options.concat;
+  }
 
-	function gulpMarkdox(file, enc, callback) {
-		var self = this;
-		/*jshint validthis:true*/
+  var chunks = self.chunks;
+  (chunks[path] = chunks[path] || []).push(chunk);
+  return callback();
+}
 
-		// Do nothing if no contents
-		if (file.isNull()) {
-			this.push(file);
-			return callback();
-		}
+function render(self, callback) {
+  // intermediate list used to assure
+  // the same order of chunks after asunc processing
+  var rendered = [];
 
-		// accepting streams is optional
-		if (file.isStream()) {
-			this.emit("error", gulpError("Streams are not supported"));
-			return callback();
-		}
+  async.each(_.keys(self.chunks), render0, flush);
 
-		if (typeof options.concat === 'string') {
-			paths.push(file.path);
-			return callback();
-		}
+  function render0(outputPath, cb) {
+    var input = self.chunks[outputPath];
+    var inputDocs = input.map(function(file) { return file.formattedDoc; });
+    var options = input[0].markdoxOptions;
 
-		markdox.process(file.path, options, function(err, result) {
-			if (err) {
-				self.emit("error", gulpError(err));
-				return callback();
-			}
-			file.contents = new Buffer(result);
-			self.push(file);
-			return callback();
-		});
-	}
+    markdox.generate(inputDocs, options, function(err, result) {
+      if (err) {
+        self.emit('error', gulpError(err));
+        return cb(err);
+      }
+      var file = new gutil.File({ path: outputPath });
+      file.contents = new Buffer(result);
+      rendered.push(file);
+      return cb();
+    });
+  }
 
-	function concat(callback) {
-		var self = this;
-		/*jshint validthis:true*/
+  function flush(err) {
+    rendered.forEach(function(file) { self.push(file); });
+    callback(err);
+  }
+}
 
-		if (paths.length === 0) {
-			return callback();
-		}
+function noop(self, callback) {
+  return callback();
+}
 
-		markdox.process(paths, options, function(err, result) {
-			if (err) {
-				this.emit("error", gulpError(err));
-				return callback();
-			}
-			var file = new gutil.File({ path: options.concat, });
-			file.contents = new Buffer(result);
-			self.push(file);
-			return callback();
-		});
-	}
+function stream(transform, flush) {
+  var initializers = [].slice.call(arguments, 2);
 
-	return through.obj(gulpMarkdox, concat);
-};
+  return function(options) {
+    function transformDecorator(chunk, enc, callback) {
+      chunk.markdoxOptions = _.defaults(options || chunk.markdoxOptions || {}, {
+        output: false,
+        encoding: enc,
+        formatter: markdox.defaultFormatter,
+      });
+      if (chunk.isNull()) {
+        this.push(chunk);
+        return callback();
+      }
+      return transform(this, chunk.markdoxOptions, chunk, callback);
+    }
+
+    function flushDecorator(callback) {
+      return flush(this, callback);
+    }
+
+    var retVal = through.obj(transformDecorator, flushDecorator);
+    initializers.forEach(function(init) { init(retVal); });
+    return retVal;
+  };
+}
+
+function requireBuffer(chunkHandler) {
+  return function(self, options, chunk, callback) {
+    if (chunk.isStream()) {
+      self.emit('error', gulpError('Streams are not supported'));
+      return callback();
+    }
+
+    return chunkHandler(self, options, chunk, callback);
+  };
+}
+
+function requireProperty(propertyName, chunkHandler) {
+  return function(self, options, chunk, callback) {
+    if (typeof chunk[propertyName] === 'undefined') {
+      self.emit('error', gulpError('Couldn\'t find property on data chunk: "'+ propertyName +'"'));
+      return callback();
+    }
+
+    return chunkHandler(self, options, chunk, callback);
+  };
+}
+
+function createArray(propertyName) {
+  return function(self) {
+    self[propertyName] = [];
+  };
+}
+
+function gulpError(message) {
+  return new gutil.PluginError('gulp-markdox', message);
+}
+
