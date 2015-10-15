@@ -84,9 +84,10 @@ function maybeConcat(self, options, chunk, callback) {
 }
 
 function render(self, callback) {
-  // intermediate list used to assure
-  // the same order of chunks after asunc processing
-  var rendered = [];
+  // intermediate map used to assure
+  // the same order of chunks after async processing
+  var rendered = {};
+  var length = 0;
 
   async.each(_.keys(self.chunks), render0, flush);
 
@@ -95,6 +96,8 @@ function render(self, callback) {
     var inputDocs = input.map(function(file) { return file.formattedDoc; });
     var options = input[0].markdoxOptions;
 
+    var index = length++;
+
     markdox.generate(inputDocs, options, function(err, result) {
       if (err) {
         self.emit('error', gulpError(err));
@@ -102,13 +105,17 @@ function render(self, callback) {
       }
       var file = new gutil.File({ path: outputPath });
       file.contents = new Buffer(result);
-      rendered.push(file);
+      rendered[index] = file;
       return cb();
     });
   }
 
   function flush(err) {
-    rendered.forEach(function(file) { self.push(file); });
+    _.keys(rendered)
+      .sort(function(a, b) { return a > b; })
+      .map(function(index) { return rendered[index]; })
+      .forEach(function(file) { self.push(file); })
+    ;
     callback(err);
   }
 }
