@@ -8,7 +8,6 @@ CoffeeScript and IcedCoffeeScript.
 This plugin is a `gulp` wrapper for it.
 
 ## Usage
-
 First, install `gulp-markdox` as a development dependency:
 
 ```shell
@@ -34,7 +33,6 @@ All parsed docfiles will be passed to templateat once:
 
 ```javascript
 var markdox = require("gulp-markdox");
-var concat = require("gulp-concat");
 
 gulp.task("doc", function(){
   gulp.src("./src/*.js")
@@ -43,37 +41,66 @@ gulp.task("doc", function(){
 });
 ```
 
-## API
+Following example does the same in more fine-grained manner:
 
-Please refer to [markdox's documentation](https://github.com/cbou/markdox) for further documentation of these options.x'
+```javascript
+var markdox = require("gulp-markdox");
+
+gulp.task("doc", function(){
+  gulp.src("./src/*.js")
+    .pipe(markdox.parse())
+    .pipe(markdox.format())
+    .pipe(markdox.render({ concat: "doc.md" }))
+    .pipe(gulp.dest("./doc"));
+});
+```
+
+## API
+Please refer to [markdox's documentation](https://github.com/cbou/markdox) for further documentation of these options.x'.
 
 ### markdox(options)
+Generates markdox documentation from source code in the input.
 
-#### options.template
-Type: `String`
+#### options.compiler
+Type: `Function`
 
-Path or the custom template
+Custom compiler (user in parse phase).
 
 #### options.encoding
 Type: `String`
 Default: `utf-8`
 
-Encoding of templates and files to parse
+Encoding of templates and files to parse (used in parse phase).
 
 #### options.formatter
 Type: `Function`
 
-Custom formatter
-
-#### options.compiler
-Type: `Function`
-
-Custom compiler
+Custom formatter (used in format phase).
 
 #### options.concat
 Type: `String`
 
-File name for concatenated docfile
+File name for concatenated docfile.
+
+#### options.template
+Type: `String`
+
+Path or the custom template (used in render phase).
+
+### markdox.parse(options)
+Input: commented source code in file `contents`.
+
+Output: raw document object generated from comments assigned to `javadoc` property.
+
+### markdox.format(options)
+Input: raw document object generated from comments assigned to `javadoc` property.
+
+Output: formatted document object assigned to `formattedDoc` property.
+
+### markdox.render(options)
+Input: formatted document object assigned to `formattedDoc` property.
+
+Output: rendered documentation in file `contents`.
 
 ## License
 
