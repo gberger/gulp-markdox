@@ -14,28 +14,28 @@ gutil = require 'gulp-util'
 markdox = require '../'
 defaultFormatter = require('markdox').defaultFormatter
 
-describe "gulp-markdox", ->
+files = []
+customTemplate = null
+src = []
 
-  files = []
-  customTemplate = null
-  src = []
+before ->
+  files.push file = tmp.fileSync prefix: 'markdox'
+  fs.writeFileSync file.name, '/** comment0 */'
+  files.push file = tmp.fileSync prefix: 'markdox'
+  fs.writeFileSync file.name, '/** comment1 */'
 
-  before ->
-    files.push file = tmp.fileSync prefix: 'markdox'
-    fs.writeFileSync file.name, '/** comment0 */'
-    files.push file = tmp.fileSync prefix: 'markdox'
-    fs.writeFileSync file.name, '/** comment1 */'
+  customTemplate = tmp.fileSync prefix: 'markdox'
+  fs.writeFileSync customTemplate.name, 'custom template: <?= docfiles.length ?>'
 
-    customTemplate = tmp.fileSync prefix: 'markdox'
-    fs.writeFileSync customTemplate.name, 'custom template: <?= docfiles.length ?>'
+  src = files.map (file) -> file.name
 
-    src = files.map (file) -> file.name
+after ->
+  fs.unlinkSync customTemplate.name
+  while files.length
+    files.shift().removeCallback()
+  src = [];
 
-  after ->
-    fs.unlinkSync customTemplate.name
-    while files.length
-      files.shift().removeCallback()
-    src = [];
+describe 'markdox()', ->
 
   it 'should generate output files with contents from all piped source files', (done) ->
 
@@ -111,4 +111,88 @@ describe "gulp-markdox", ->
           result.path.should.match /all\.md/
         .pipe assert.end done
 
+  describe 'given all options available passed in constructor', ->
+    it 'should use given options properly', (done) ->
+      compiled = 0
+      customCompiler = -> compiled += 1; ''
+      formatted = 0
+      customFormatter = -> { fid: formatted++ }
+
+      gulp.src src
+        .pipe markdox {
+          compiler: customCompiler,
+          formatter: customFormatter,
+          concat: 'all.md',
+          template: customTemplate.name
+        }
+        .pipe assert.length 1
+        .pipe assert.first itis.ok (result) ->
+          String(result.contents).should.be.exactly 'custom template: 2'
+          result.path.should.match /all\.md/
+        .pipe assert.end ->
+          compiled.should.equal 2
+          formatted.should.equal 2
+          done()
+
+
+describe 'markdox.parse()', ->
+  describe '.pipe(markdox.format())', ->
+    describe '.pipe(markdox.render())', ->
+
+      it 'should generate output files with contents from all piped source files', (done) ->
+        gulp.src src
+          .pipe markdox.parse()
+          .pipe markdox.format()
+          .pipe markdox.render()
+          .pipe assert.length 2
+          .pipe assert.first itis.ok (result) ->
+            String(result.contents).should.match /.*comment0.*/
+          .pipe assert.second itis.ok (result) ->
+            String(result.contents).should.match /.*comment1.*/
+          .pipe assert.end done
+
+      describe 'given all options passed in constructors of their phases', ->
+        it 'should use given options properly', (done) ->
+          compiled = 0
+          customCompiler = -> compiled += 1; ''
+          formatted = 0
+          customFormatter = -> { fid: formatted++ }
+
+          gulp.src src
+            .pipe markdox.parse compiler: customCompiler
+            .pipe markdox.format formatter: customFormatter
+            .pipe markdox.render concat: 'all.md', template: customTemplate.name
+            .pipe assert.length 1
+            .pipe assert.first itis.ok (result) ->
+              String(result.contents).should.be.exactly 'custom template: 2'
+              result.path.should.match /all\.md/
+            .pipe assert.end ->
+              compiled.should.equal 2
+              formatted.should.equal 2
+              done()
+
+      describe 'given all options passed in constructor of markdox.parse', ->
+        it 'should use given options properly', (done) ->
+          compiled = 0
+          customCompiler = -> compiled += 1; ''
+          formatted = 0
+          customFormatter = -> { fid: formatted++ }
+
+          gulp.src src
+            .pipe markdox.parse {
+              compiler: customCompiler,
+              formatter: customFormatter,
+              concat: 'all.md',
+              template: customTemplate.name
+            }
+            .pipe markdox.format()
+            .pipe markdox.render()
+            .pipe assert.length 1
+            .pipe assert.first itis.ok (result) ->
+              String(result.contents).should.be.exactly 'custom template: 2'
+              result.path.should.match /all\.md/
+            .pipe assert.end ->
+              compiled.should.equal 2
+              formatted.should.equal 2
+              done()
 
