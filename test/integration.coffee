@@ -19,12 +19,12 @@ customTemplate = null
 src = []
 
 before ->
-  files.push file = tmp.fileSync prefix: 'markdox'
+  files.push file = tmp.fileSync prefix: 'markdox', dir: './tmp'
   fs.writeFileSync file.name, '/** comment0 */'
-  files.push file = tmp.fileSync prefix: 'markdox'
+  files.push file = tmp.fileSync prefix: 'markdox', dir: './tmp'
   fs.writeFileSync file.name, '/** comment1 */'
 
-  customTemplate = tmp.fileSync prefix: 'markdox'
+  customTemplate = tmp.fileSync prefix: 'markdox', dir: './tmp'
   fs.writeFileSync customTemplate.name, 'custom template: <?= docfiles.length ?>'
 
   src = files.map (file) -> file.name

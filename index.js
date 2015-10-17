@@ -45,6 +45,9 @@ _.extend(module.exports, {
 });
 
 function parse(self, options, chunk, callback) {
+  chunk.path = path.relative(process.cwd(), chunk.path);
+  chunk.cwd = process.cwd();
+
   markdox.parse(chunk.path, options, function(err, doc) {
     if (err) {
       self.emit('error', gulpError(err));

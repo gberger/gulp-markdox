@@ -25,7 +25,7 @@ FileMock = _.partial _.create,
 describe 'markdox.parse()', ->
   files = []
   before ->
-    files.push file = tmp.fileSync prefix: 'markdox'
+    files.push file = tmp.fileSync prefix: 'markdox', dir: './tmp'
     fs.writeFileSync file.name, '/* comment0 */'
   after ->
     while files.length
