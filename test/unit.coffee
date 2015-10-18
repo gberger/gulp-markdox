@@ -68,7 +68,6 @@ describe 'markdox.format()', ->
     testedStream = markdox.format()
       .on 'error', (error) ->
         emittedError = error
-        this.emit 'end'
 
     testedStream.pipe assert.end ->
       should.exist emittedError
@@ -76,6 +75,7 @@ describe 'markdox.format()', ->
       done()
 
     testedStream.write FileMock()
+    testedStream.end()
 
   it 'should call custom formatter that was passed in constructor options', (done) ->
     docfiles = []
@@ -90,6 +90,34 @@ describe 'markdox.format()', ->
       docfiles[0].javadoc.should.equal 'a'
       docfiles[1].javadoc.should.equal 'b'
       done()
+
+  it 'should emit error when custom formatter throws exception', (done) ->
+    emittedError = null
+
+    testedStream = markdox.format(formatter: -> throw new Error 'test error')
+      .on 'error', (error) -> emittedError = error
+
+    testedStream.pipe assert.end ->
+      should.exist emittedError
+      emittedError.message.should.equal 'test error'
+      done()
+
+    testedStream.write FileMock javadoc: 'a'
+    testedStream.end()
+
+  it 'should emit error when custom formatter returns falsy document', (done) ->
+    emittedError = null
+
+    testedStream = markdox.format(formatter: -> null)
+      .on 'error', (error) -> emittedError = error
+
+    testedStream.pipe assert.end ->
+      should.exist emittedError
+      emittedError.message.should.equal 'No document returned from formatter: undefined'
+      done()
+
+    testedStream.write FileMock javadoc: 'a'
+    testedStream.end()
 
 describe 'markdox.render()', ->
 
