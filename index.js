@@ -65,6 +65,7 @@ function format(self, options, chunk, callback) {
     chunk.formattedDoc = options.formatter({
       filename: chunk.path,
       javadoc: chunk.javadoc,
+      options: options,
     });
     if (!chunk.formattedDoc) {
       self.emit('error', gulpError('No document returned from formatter: '+ chunk.formatterDoc));
