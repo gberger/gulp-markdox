@@ -31,7 +31,7 @@
     "mocha": "*",
     "should": "~2.1.0",
     "coffee-script": "~1.10.0",
-    "event-stream": "~3.1.0",
+    "event-stream": "~3.3.3",
     "tmp": "0.0.27",
     "stream-assert": "~2.0.3",
     "funsert": "~0.1.1",
