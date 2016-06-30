@@ -1,9 +1,24 @@
+[npm-url]: https://npmjs.org/package/gulp-markdox2
+[npm-image]: https://badge.fury.io/js/gulp-markdox2.png
+
+[travis-url]: http://travis-ci.org/webfront-toolkit/gulp-markdox2
+[travis-image]: https://secure.travis-ci.org/webfront-toolkit/gulp-markdox2.png?branch=master
+
+[david-url]: https://david-dm.org/webfront-toolkit/gulp-markdox2
+[david-image]: https://david-dm.org/webfront-toolkit/gulp-markdox2.svg
+
+[david-url-dev]: https://david-dm.org/webfront-toolkit/gulp-markdox2#info=devDependencies
+[david-image-dev]: https://david-dm.org/webfront-toolkit/gulp-markdox2/dev-status.svg
+
 # gulp-markdox2
+
 [![NPM version][npm-image]][npm-url]
 [![Build Status][travis-image]][travis-url]
+[![Dependency Status][david-image]][david-url]
+[![devDependency Status][david-image-dev]][david-url-dev]
 
-Markdox is a documentation generator based on Dox and Markdown with support for JavaScript,
-CoffeeScript and IcedCoffeeScript.
+Markdo a documentation generator based on Dox and Markdown with support for JavaScript,
+CoffeeScrip IcedCoffeeScript.
 
 This plugin is a `gulp` wrapper for it.
 
@@ -105,10 +120,4 @@ Output: rendered documentation in file `contents`.
 ## License
 
 [MIT License](http://en.wikipedia.org/wiki/MIT_License)
-
-[npm-url]: https://npmjs.org/package/gulp-markdox2
-[npm-image]: https://badge.fury.io/js/gulp-markdox2.png
-
-[travis-url]: http://travis-ci.org/webfront-toolkit/gulp-markdox2
-[travis-image]: https://secure.travis-ci.org/webfront-toolkit/gulp-markdox2.png?branch=master
 
