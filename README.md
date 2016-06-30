@@ -17,7 +17,7 @@
 [![Dependency Status][david-image]][david-url]
 [![devDependency Status][david-image-dev]][david-url-dev]
 
-Markdo a documentation generator based on Dox and Markdown with support for JavaScript,
+Markdox is a documentation generator based on Dox and Markdown with support for JavaScript,
 CoffeeScrip IcedCoffeeScript.
 
 This plugin is a `gulp` wrapper for it.
