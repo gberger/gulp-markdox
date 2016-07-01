@@ -10,12 +10,16 @@
 [david-url-dev]: https://david-dm.org/webfront-toolkit/gulp-markdox2#info=devDependencies
 [david-image-dev]: https://david-dm.org/webfront-toolkit/gulp-markdox2/dev-status.svg
 
+[license-url]: LICENCE
+[license-image]: https://img.shields.io/github/license/webfront-toolkit/gulp-markdox2.svg?maxAge=2592000
+
 # gulp-markdox2
 
 [![NPM version][npm-image]][npm-url]
 [![Build Status][travis-image]][travis-url]
 [![Dependency Status][david-image]][david-url]
 [![devDependency Status][david-image-dev]][david-url-dev]
+[![License][license-image]][license-url]
 
 [Markdox][markdox] is a structured documentation generator based on [Dox][dox],
 [Markdown][markdown] and [EJS][ejs] with support for [JavaScript][js], [CoffeeScript][coffee]
