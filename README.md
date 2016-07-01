@@ -1,5 +1,5 @@
 [npm-url]: https://npmjs.org/package/gulp-markdox2
-[npm-image]: https://badge.fury.io/js/gulp-markdox2.png
+[npm-image]: https://img.shields.io/npm/v/gulp-markdox2.svg?maxAge=2592000
 
 [travis-url]: http://travis-ci.org/webfront-toolkit/gulp-markdox2
 [travis-image]: https://secure.travis-ci.org/webfront-toolkit/gulp-markdox2.png?branch=master
