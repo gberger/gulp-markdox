@@ -10,7 +10,7 @@
 [david-url-dev]: https://david-dm.org/webfront-toolkit/gulp-markdox2#info=devDependencies
 [david-image-dev]: https://david-dm.org/webfront-toolkit/gulp-markdox2/dev-status.svg
 
-[license-url]: LICENCE
+[license-url]: LICENSE
 [license-image]: https://img.shields.io/github/license/webfront-toolkit/gulp-markdox2.svg?maxAge=2592000
 
 # gulp-markdox2
