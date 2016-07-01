@@ -17,10 +17,20 @@
 [![Dependency Status][david-image]][david-url]
 [![devDependency Status][david-image-dev]][david-url-dev]
 
-Markdox is a documentation generator based on Dox and Markdown with support for JavaScript,
-CoffeeScrip IcedCoffeeScript.
+[Markdox][markdox] is a structured documentation generator based on [Dox][dox],
+[Markdown][markdown] and [EJS][ejs] with support for [JavaScript][js], [CoffeeScript][coffee]
+and [IcedCoffee][iced].
 
-This plugin is a `gulp` wrapper for it.
+This plugin is a [gulp][gulp] wrapper for it.
+
+[markdox]: https://github.com/cbou/markdox
+[dox]: https://github.com/tj/dox
+[markdown]: https://daringfireball.net/projects/markdown/syntax
+[ejs]: http://www.embeddedjs.com/
+[js]: https://developer.mozilla.org/en-US/docs/Web/JavaScript
+[coffee]: http://coffeescript.org/
+[iced]: http://maxtaco.github.io/coffee-script/
+[gulp]: https://github.com/gulpjs/gulp
 
 ## Usage
 First, install `gulp-markdox` as a development dependency:
@@ -71,7 +81,7 @@ gulp.task("doc", function(){
 ```
 
 ## API
-Please refer to [markdox's documentation](https://github.com/cbou/markdox) for further documentation of these options.x'.
+Please refer to [markdox's documentation][markdox] for further documentation of these options.x'.
 
 ### markdox(options)
 Generates markdox documentation from source code in the input.
