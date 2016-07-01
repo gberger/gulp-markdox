@@ -8,7 +8,8 @@
     "markdown",
     "documentation",
     "gulp",
-    "ejs"
+    "ejs",
+    "dox"
   ],
   "author": {
     "name": "Maciej Chałapuk",
