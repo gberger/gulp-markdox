@@ -2,7 +2,7 @@
 [npm-image]: https://img.shields.io/npm/v/gulp-markdox2.svg?maxAge=2592000
 
 [travis-url]: http://travis-ci.org/webfront-toolkit/gulp-markdox2
-[travis-image]: https://secure.travis-ci.org/webfront-toolkit/gulp-markdox2.png?branch=master
+[travis-image]: https://img.shields.io/travis/webfront-toolkit/gulp-markdox2.svg?maxAge=2592000
 
 [david-url]: https://david-dm.org/webfront-toolkit/gulp-markdox2
 [david-image]: https://david-dm.org/webfront-toolkit/gulp-markdox2.svg
