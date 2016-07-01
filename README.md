@@ -19,8 +19,7 @@
 
 [Markdox][markdox] is a structured documentation generator based on [Dox][dox],
 [Markdown][markdown] and [EJS][ejs] with support for [JavaScript][js], [CoffeeScript][coffee]
-and [IcedCoffee][iced].
-
+and [Iced CoffeeScript][iced].
 This plugin is a [gulp][gulp] wrapper for it.
 
 [markdox]: https://github.com/cbou/markdox
@@ -54,7 +53,7 @@ gulp.task("doc", function(){
 It can take on `.coffee` and `.iced` files, too.
 
 If you want to concatenate all your generated documentation files, use `concat` option.
-All parsed docfiles will be passed to templateat once:
+All parsed docfiles will be passed to template at once:
 
 ```javascript
 var markdox = require("gulp-markdox");
