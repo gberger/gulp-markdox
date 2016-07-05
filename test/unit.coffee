@@ -1,4 +1,3 @@
-es = require 'event-stream'
 fs = require 'fs'
 should = require 'should'
 mocha = require 'mocha'
