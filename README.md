@@ -7,7 +7,7 @@
 [david-url]: https://david-dm.org/webfront-toolkit/gulp-markdox2
 [david-image]: https://david-dm.org/webfront-toolkit/gulp-markdox2.svg
 
-[david-url-dev]: https://david-dm.org/webfront-toolkit/gulp-markdox2#info=devDependencies
+[david-url-dev]: https://david-dm.org/webfront-toolkit/gulp-markdox2?type=dev
 [david-image-dev]: https://david-dm.org/webfront-toolkit/gulp-markdox2/dev-status.svg
 
 [license-url]: LICENSE
