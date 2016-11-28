@@ -132,5 +132,5 @@ Output: rendered documentation in file `contents`.
 
 ## License
 
-[MIT License](http://en.wikipedia.org/wiki/MIT_License)
+Copyright &copy; 2016 Maciej Chałapuk. Released under [MIT License](LICENSE).
 
