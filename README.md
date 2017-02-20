@@ -1,17 +1,17 @@
-[npm-url]: https://npmjs.org/package/gulp-markdox2
-[npm-image]: https://img.shields.io/npm/v/gulp-markdox2.svg?maxAge=2592000
+[npm-url]: https://npmjs.org/package/gulp-markdox
+[npm-image]: https://img.shields.io/npm/v/gulp-markdox.svg?maxAge=2592000
 
-[travis-url]: http://travis-ci.org/muroc/gulp-markdox2
-[travis-image]: https://img.shields.io/travis/muroc/gulp-markdox2.svg?maxAge=2592000
+[travis-url]: http://travis-ci.org/gberger/gulp-markdox
+[travis-image]: https://img.shields.io/travis/gberger/gulp-markdox.svg?maxAge=2592000
 
-[david-url]: https://david-dm.org/muroc/gulp-markdox2
-[david-image]: https://david-dm.org/muroc/gulp-markdox2.svg
+[david-url]: https://david-dm.org/gberger/gulp-markdox
+[david-image]: https://david-dm.org/gberger/gulp-markdox.svg
 
-[david-url-dev]: https://david-dm.org/muroc/gulp-markdox2?type=dev
-[david-image-dev]: https://david-dm.org/muroc/gulp-markdox2/dev-status.svg
+[david-url-dev]: https://david-dm.org/gberger/gulp-markdox?type=dev
+[david-image-dev]: https://david-dm.org/gberger/gulp-markdox/dev-status.svg
 
 [license-url]: LICENSE
-[license-image]: https://img.shields.io/github/license/muroc/gulp-markdox2.svg?maxAge=2592000
+[license-image]: https://img.shields.io/github/license/gberger/gulp-markdox.svg?maxAge=2592000
 
 # gulp-markdox2
 
