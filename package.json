@@ -12,11 +12,11 @@
     "dox"
   ],
   "author": {
-    "name": "Maciej Chałapuk",
-    "email": "maciej@chalapuk.pl",
-    "url": "https://github.com/muroc"
+    "name": "Guilherme Berger",
+    "email": "guilherme.berger@gmail.com",
+    "url": "https://github.com/gberger"
   },
-  "repository": "webfront-toolkit/gulp-markdox2",
+  "repository": "gberger/gulp-markdox",
   "scripts": {
     "test": "mocha"
   },
