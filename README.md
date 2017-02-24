@@ -13,7 +13,7 @@
 [license-url]: LICENSE
 [license-image]: https://img.shields.io/github/license/gberger/gulp-markdox.svg?maxAge=2592000
 
-# gulp-markdox2
+# gulp-markdox
 
 [![NPM version][npm-image]][npm-url]
 [![Build Status][travis-image]][travis-url]
