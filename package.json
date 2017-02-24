@@ -16,6 +16,13 @@
     "email": "guilherme.berger@gmail.com",
     "url": "https://github.com/gberger"
   },
+  "contributors": [
+    {
+      "name": "Maciej Chałapuk",
+      "email": "maciej@chalapuk.pl",
+      "url": "https://github.com/muroc"
+    }
+  ],
   "repository": "gberger/gulp-markdox",
   "scripts": {
     "test": "mocha"
